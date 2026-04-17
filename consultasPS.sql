@@ -14,7 +14,8 @@ SELECT
     h.tipo,
     COUNT(r.id_reserva) AS total_reservas
 FROM habitacion h
-JOIN reserva r ON h.id_habitacion = r.id_habitacion
+INNER JOIN reserva  AS r
+        ON h.id_habitacion = r.id_habitacion
 GROUP BY h.tipo
 ORDER BY total_reservas DESC;
 
