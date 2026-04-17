@@ -1,24 +1,21 @@
--- 4. Precio promedio de las habitaciones más reservadas
--- Muestra el precio promedio de las habitaciones que han tenido al menos una reserva.
+-- 4. Suma de números de habitación por tipo
+-- Suma los números de habitación agrupados por tipo.
 SELECT 
-    AVG(h.precio_noche) AS precio_promedio_reservadas
+    tipo,
+    SUM(num_habitacion) AS suma_numeros_habitacion
+FROM habitacion
+GROUP BY tipo
+ORDER BY suma_numeros_habitacion DESC;
+
+
+-- 5. Total de reservas por tipo de habitación
+-- Cuenta cuántas reservas ha tenido cada tipo de habitación.
+SELECT 
+    h.tipo,
+    COUNT(r.id_reserva) AS total_reservas
 FROM habitacion h
-INNER JOIN reserva AS r 
-ON h.id_habitacion = r.id_habitacion;
-
-
--- 5. Suma de precios de habitaciones por cliente
--- Calcula la suma de los precios de las habitaciones que ha reservado cada cliente.
-SELECT 
-    c.nombre,
-    SUM(h.precio_noche) AS suma_precios_reservados
-FROM cliente c
-INNER JOIN reserva AS r
-ON c.id_cliente = r.id_cliente
-INNER JOIN habitacion AS h
- ON r.id_habitacion = h.id_habitacion
-GROUP BY c.id_cliente, c.nombre
-ORDER BY suma_precios_reservados DESC;
-
+JOIN reserva r ON h.id_habitacion = r.id_habitacion
+GROUP BY h.tipo
+ORDER BY total_reservas DESC;
 
 
